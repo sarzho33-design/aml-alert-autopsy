@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>AML Alert Autopsy — Northstar Research</title>
+<meta name="description" content="A private research study into what actually happens during AML transaction-monitoring investigations.">
+<style>
+:root{--bg:#0b0d10;--card:#11151a;--line:#252b33;--text:#f4f6f8;--muted:#aab2bd;--accent:#d9ff65}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,system-ui,-apple-system,Segoe UI,sans-serif;line-height:1.6}
+.wrap{max-width:900px;margin:auto;padding:70px 24px}
+.badge{display:inline-block;border:1px solid #39414b;border-radius:999px;padding:6px 12px;color:var(--muted);font-size:13px}
+h1{font-size:clamp(44px,8vw,78px);line-height:.98;letter-spacing:-.05em;margin:25px 0}
+h2{font-size:28px;margin-top:55px}h3{margin-top:30px}.lead{font-size:22px;color:#d4d9df;max-width:720px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:28px;margin:22px 0}
+.question{border-left:3px solid var(--accent);padding-left:18px;margin:25px 0}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+input,textarea{width:100%;background:#0b0d10;color:white;border:1px solid #343b44;border-radius:10px;padding:13px;font:inherit}
+textarea{min-height:150px;resize:vertical}label{display:block;margin:16px 0 7px;font-weight:600}
+button{border:0;border-radius:10px;background:var(--accent);color:#0b0d10;font-weight:800;padding:14px 20px;font-size:16px;cursor:pointer}
+.small{font-size:13px;color:var(--muted)}.footer{border-top:1px solid var(--line);margin-top:70px;padding-top:25px;color:var(--muted)}
+a{color:var(--accent)}
+</style>
+</head>
+<body>
+<main class="wrap">
+<span class="badge">NORTHSTAR · RESEARCH v0.1</span>
+<h1>The AML<br>Alert Autopsy.</h1>
+<p class="lead">What actually happens between an AML transaction-monitoring alert arriving and an investigator closing it?</p>
+
+<div class="card">
+<strong>We are not looking for a pitch.</strong>
+<p>We are researching the real investigation workflow — what investigators actually see, open, search, verify, reconstruct, document and send for review.</p>
+<p class="small">No customer names, account numbers, case identifiers or confidential information. We only want the workflow.</p>
+</div>
+
+<h2>Walk us through one investigation.</h2>
+
+<div class="question"><strong>01 — The alert arrives</strong><br>What do you actually see immediately, and what is the first thing you do?</div>
+<div class="question"><strong>02 — Initial review</strong><br>What are you trying to understand first? What determines what you look at next?</div>
+<div class="question"><strong>03 — Context gathering</strong><br>Where do you go for the information you need? How many different places do you normally look?</div>
+<div class="question"><strong>04 — Reconstructing what happened</strong><br>How do you work out who sent what, to whom, when, and in what context?</div>
+<div class="question"><strong>05 — Evidence</strong><br>How do you decide that you have enough reliable information to make the decision?</div>
+<div class="question"><strong>06 — Decision</strong><br>What makes you confident enough to close, escalate, or continue investigating?</div>
+<div class="question"><strong>07 — Rationale</strong><br>How much work is involved in documenting the reasoning and evidence?</div>
+<div class="question"><strong>08 — Review</strong><br>Does the case ever come back? If so, what normally causes that?</div>
+
+<h2>The question behind the research</h2>
+<div class="card">
+<p style="font-size:21px">Where is the real friction?</p>
+<div class="grid">
+<div><strong>Information</strong><br><span class="small">Is relevant context scattered or missing?</span></div>
+<div><strong>Reconstruction</strong><br><span class="small">Is activity difficult to understand?</span></div>
+<div><strong>Evidence</strong><br><span class="small">Is verification difficult?</span></div>
+<div><strong>Reasoning</strong><br><span class="small">Is the rationale difficult to document?</span></div>
+<div><strong>Review</strong><br><span class="small">Does investigation create rework?</span></div>
+<div><strong>Something else</strong><br><span class="small">Is our entire map wrong?</span></div>
+</div>
+</div>
+
+<h2>Share the workflow</h2>
+<p class="small">This form is designed for a short, anonymous research response. Do not include confidential case information.</p>
+<form id="researchForm">
+<label for="role">Your role</label>
+<input id="role" placeholder="e.g. AML Investigator, Transaction Monitoring Analyst">
+
+<label for="experience">Experience</label>
+<input id="experience" placeholder="e.g. 3 years">
+
+<label for="workflow">Walk us through a typical alert, from arrival to closure.</label>
+<textarea id="workflow" placeholder="Write as much or as little as you want..."></textarea>
+
+<label for="friction">What part takes more work than it should?</label>
+<textarea id="friction" placeholder="Your own words are better than a rating."></textarea>
+
+<label for="contact">Optional contact</label>
+<input id="contact" placeholder="Email or LinkedIn — only if you want us to follow up">
+
+<button type="submit">Submit research response</button>
+<p id="status" class="small"></p>
+</form>
+
+<div class="footer">
+<strong>Northstar Research</strong><br>
+Independent workflow research. No sales pitch. No confidential information.
+</div>
+</main>
+<script>
+document.getElementById('researchForm').addEventListener('submit', function(e){
+ e.preventDefault();
+ const data={
+  role:document.getElementById('role').value,
+  experience:document.getElementById('experience').value,
+  workflow:document.getElementById('workflow').value,
+  friction:document.getElementById('friction').value,
+  contact:document.getElementById('contact').value
+ };
+ const text=encodeURIComponent(
+  "NORTHSTAR AML ALERT AUTOPSY\\n\\nRole: "+data.role+
+  "\\nExperience: "+data.experience+"\\n\\nWorkflow:\\n"+data.workflow+
+  "\\n\\nFriction:\\n"+data.friction+"\\n\\nContact: "+data.contact
+ );
+ document.getElementById('status').innerHTML =
+  'Your response is ready. <a href="mailto:?subject=Northstar%20AML%20Alert%20Autopsy%20Response&body='+text+'">Click here to send it by email</a>.';
+});
+</script>
+</body>
+</html>
